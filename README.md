@@ -111,6 +111,3 @@ Visit `http://localhost:5173` in your browser.
 
 Ties directly to a real placement timeline — application CRUD, prep-roadmap sync, and deadline logic combined in one schema-linked system, rather than treating job hunting and prep as separate spreadsheets.
 
-## 📄 License
-
-MIT
