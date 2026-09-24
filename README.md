@@ -2,7 +2,13 @@
 
 **Placement Progress & Application Tracker** — a MERN stack dashboard that ties your job/internship applications directly to your personal prep roadmap, so you always know where you stand and what to do next.
 
+🔗 **Live Demo:** [preptrack-indol.vercel.app](https://preptrack-indol.vercel.app)
+📂 **Backend API:** [preptrack-backend-lzx9.onrender.com](https://preptrack-backend-lzx9.onrender.com)
+💻 **Source Code:** [github.com/shreyaahirrao/PrepTrack](https://github.com/shreyaahirrao/PrepTrack)
 
+> ⚠️ Note: The backend is hosted on Render's free tier, which spins down after inactivity. The first request after idling may take 30–60 seconds to respond.
+
+---
 
 ## 📖 About
 
@@ -26,7 +32,11 @@ Built for students of **any branch** (Core Engineering, Software/IT, Data Scienc
 **Backend:** Node.js, Express, MongoDB (Atlas), Mongoose, JWT (cookie-based auth), bcrypt
 **Deployment:** Vercel (frontend), Render (backend), MongoDB Atlas (database)
 
+## 📸 Screenshots
 
+| Landing Page | Dashboard | Applications |
+|---|---|---|
+| *(add screenshot)* | *(add screenshot)* | *(add screenshot)* |
 
 ## 🏗️ Project Structure
 
@@ -111,3 +121,8 @@ Visit `http://localhost:5173` in your browser.
 
 Ties directly to a real placement timeline — application CRUD, prep-roadmap sync, and deadline logic combined in one schema-linked system, rather than treating job hunting and prep as separate spreadsheets.
 
+## 🧩 Deployment Notes
+
+Deployed as two independently hosted services:
+- **Frontend** (Vercel) — builds from `frontend/`, with `VITE_API_URL` set as a build-time environment variable pointing to the Render backend
+- **Backend** (Render) — runs from `backend/`, with `CLIENT_URL` set to the Vercel domain for CORS, and cookies configured with `sameSite: "none"` and `secure: true` in production to support cross-origin authentication
