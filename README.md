@@ -26,11 +26,7 @@ Built for students of **any branch** (Core Engineering, Software/IT, Data Scienc
 **Backend:** Node.js, Express, MongoDB (Atlas), Mongoose, JWT (cookie-based auth), bcrypt
 **Deployment:** Vercel (frontend), Render (backend), MongoDB Atlas (database)
 
-## 📸 Screenshots
 
-| Landing Page | Dashboard | Applications |
-|---|---|---|
-| *(add screenshot)* | *(add screenshot)* | *(add screenshot)* |
 
 ## 🏗️ Project Structure
 
