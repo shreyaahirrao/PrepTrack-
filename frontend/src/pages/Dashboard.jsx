@@ -6,14 +6,17 @@ import AnimatedNumber from "../components/AnimatedNumber";
 import Skeleton from "../components/Skeleton";
 import ProgressRing from "../components/ProgressRing";
 import ProjectInfoBanner from "../components/ProjectInfoBanner";
+import StatusChart from "../components/StatusChart";
 
 const Dashboard = () => {
   const [progress, setProgress] = useState(null);
   const [overdue, setOverdue] = useState([]);
+  const [applications, setApplications] = useState([]);
 
   useEffect(() => {
     api.get("/roadmap/progress").then((res) => setProgress(res.data));
     api.get("/applications/overdue").then((res) => setOverdue(res.data));
+    api.get("/applications").then((res) => setApplications(res.data));
   }, []);
 
   if (!progress) {
@@ -56,6 +59,8 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
+
+        <StatusChart applications={applications} />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           <StatCard label="Topics Left" value={progress.topicsLeft} color="text-warning" />
