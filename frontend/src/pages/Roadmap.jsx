@@ -1,10 +1,29 @@
 import { useEffect, useState } from "react";
 import api from "../api/axios";
 import toast from "react-hot-toast";
-import { FiPlus, FiCheck, FiTrash2 } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 import PageTransition from "../components/PageTransition";
 import EmptyState from "../components/EmptyState";
+import { FiPlus, FiCheck, FiTrash2, FiEdit2 } from "react-icons/fi";
+
+const [editingTopicId, setEditingTopicId] = useState(null);
+const [editForm, setEditForm] = useState({ title: "", category: "", problemsTarget: 0 });
+
+const startEditTopic = (topic) => {
+  setEditingTopicId(topic._id);
+  setEditForm({
+    title: topic.title,
+    category: topic.category,
+    problemsTarget: topic.problemsTarget,
+  });
+};
+
+const saveEditTopic = async (id) => {
+  await api.put(`/roadmap/topics/${id}`, editForm);
+  setEditingTopicId(null);
+  toast.success("Topic updated");
+  fetchAll();
+};
 
 const Roadmap = () => {
   const [topics, setTopics] = useState([]);
@@ -87,40 +106,83 @@ const Roadmap = () => {
               <AnimatePresence>
                 {topics.map((t) => (
                   <motion.div
-                    key={t._id}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 10 }}
-                    className={`flex items-center justify-between p-3 rounded-xl border ${
-                      t.completed ? "bg-green-50 border-green-100" : "bg-white border-gray-100"
-                    }`}
-                  >
-                    <div>
-                      <p className={`font-medium ${t.completed ? "line-through text-gray-400" : ""}`}>
-                        {t.title}
-                      </p>
-                      <p className="text-xs text-gray-400">
-                        {t.category}
-                        {t.problemsTarget > 0 && ` · ${t.problemsSolved}/${t.problemsTarget} problems`}
-                      </p>
-                    </div>
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() => toggleComplete(t)}
-                        className={`p-1.5 rounded-full active:scale-90 transition-transform ${
-                          t.completed ? "bg-green-500 text-white" : "bg-gray-100 text-gray-400"
-                        }`}
-                      >
-                        <FiCheck size={14} />
-                      </button>
-                      <button
-                        onClick={() => deleteTopic(t._id)}
-                        className="p-1.5 rounded-full bg-gray-100 text-gray-400 hover:text-red-500 active:scale-90 transition-transform"
-                      >
-                        <FiTrash2 size={14} />
-                      </button>
-                    </div>
-                  </motion.div>
+  key={t._id}
+  initial={{ opacity: 0, x: -10 }}
+  animate={{ opacity: 1, x: 0 }}
+  exit={{ opacity: 0, x: 10 }}
+  className={`p-3 rounded-xl border ${
+    t.completed ? "bg-green-50 border-green-100" : "bg-white border-gray-100"
+  }`}
+>
+  {editingTopicId === t._id ? (
+    <div className="space-y-2">
+      <input
+        value={editForm.title}
+        onChange={(e) => setEditForm({ ...editForm, title: e.target.value })}
+        className="w-full border border-gray-300 rounded px-2 py-1 text-sm"
+      />
+      <input
+        value={editForm.category}
+        onChange={(e) => setEditForm({ ...editForm, category: e.target.value })}
+        className="w-full border border-gray-300 rounded px-2 py-1 text-sm"
+      />
+      <input
+        type="number"
+        value={editForm.problemsTarget}
+        onChange={(e) => setEditForm({ ...editForm, problemsTarget: Number(e.target.value) })}
+        className="w-full border border-gray-300 rounded px-2 py-1 text-sm"
+      />
+      <div className="flex gap-2">
+        <button
+          onClick={() => saveEditTopic(t._id)}
+          className="text-xs bg-primary text-white px-3 py-1 rounded-lg"
+        >
+          Save
+        </button>
+        <button
+          onClick={() => setEditingTopicId(null)}
+          className="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded-lg"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  ) : (
+    <div className="flex items-center justify-between">
+      <div>
+        <p className={`font-medium ${t.completed ? "line-through text-gray-400" : ""}`}>
+          {t.title}
+        </p>
+        <p className="text-xs text-gray-400">
+          {t.category}
+          {t.problemsTarget > 0 && ` · ${t.problemsSolved}/${t.problemsTarget} problems`}
+        </p>
+      </div>
+      <div className="flex gap-2">
+        <button
+          onClick={() => startEditTopic(t)}
+          className="p-1.5 rounded-full bg-gray-100 text-gray-400 hover:text-primary active:scale-90 transition-transform"
+        >
+          <FiEdit2 size={14} />
+        </button>
+        <button
+          onClick={() => toggleComplete(t)}
+          className={`p-1.5 rounded-full active:scale-90 transition-transform ${
+            t.completed ? "bg-green-500 text-white" : "bg-gray-100 text-gray-400"
+          }`}
+        >
+          <FiCheck size={14} />
+        </button>
+        <button
+          onClick={() => deleteTopic(t._id)}
+          className="p-1.5 rounded-full bg-gray-100 text-gray-400 hover:text-red-500 active:scale-90 transition-transform"
+        >
+          <FiTrash2 size={14} />
+        </button>
+      </div>
+    </div>
+  )}
+</motion.div>
                 ))}
               </AnimatePresence>
             </div>
