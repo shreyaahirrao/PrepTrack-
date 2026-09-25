@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import api from "../api/axios";
 import toast from "react-hot-toast";
-import { FiPlus, FiTrash2, FiEdit2, FiX } from "react-icons/fi";
+import Papa from "papaparse";
+import { FiPlus, FiTrash2, FiEdit2, FiX, FiDownload } from "react-icons/fi";
 import { AnimatePresence, motion } from "framer-motion";
 import PageTransition from "../components/PageTransition";
 import EmptyState from "../components/EmptyState";
@@ -29,13 +30,22 @@ const Applications = () => {
   const [editingId, setEditingId] = useState(null);
   const [form, setForm] = useState(emptyForm);
 
+  const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
+  const [typeFilter, setTypeFilter] = useState("");
+
   const fetchApps = () => {
-    api.get("/applications").then((res) => setApps(res.data));
+    const params = new URLSearchParams();
+    if (search) params.append("search", search);
+    if (statusFilter) params.append("status", statusFilter);
+    if (typeFilter) params.append("roleType", typeFilter);
+    api.get(`/applications?${params.toString()}`).then((res) => setApps(res.data));
   };
 
   useEffect(() => {
-    fetchApps();
-  }, []);
+    const timer = setTimeout(fetchApps, 300);
+    return () => clearTimeout(timer);
+  }, [search, statusFilter, typeFilter]);
 
   const openNew = () => {
     setForm(emptyForm);
@@ -82,24 +92,87 @@ const Applications = () => {
     fetchApps();
   };
 
+  const exportCSV = () => {
+    const rows = apps.map((app) => ({
+      Company: app.company,
+      Role: app.roleTitle,
+      Type: app.roleType,
+      Status: app.status,
+      "Applied Date": new Date(app.appliedDate).toLocaleDateString(),
+      "Follow-up Date": app.nextFollowUpDate
+        ? new Date(app.nextFollowUpDate).toLocaleDateString()
+        : "",
+      Notes: app.notes || "",
+    }));
+    const csv = Papa.unparse(rows);
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "preptrack-applications.csv";
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <PageTransition>
       <div className="max-w-5xl mx-auto px-6 py-10">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold">Applications</h1>
-          <button
-            onClick={openNew}
-            className="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg hover:opacity-90 active:scale-95 transition-all"
+          <div className="flex gap-3">
+            <button
+              onClick={exportCSV}
+              disabled={apps.length === 0}
+              className="flex items-center gap-2 bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 active:scale-95 transition-all disabled:opacity-40"
+            >
+              <FiDownload /> Export CSV
+            </button>
+            <button
+              onClick={openNew}
+              className="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg hover:opacity-90 active:scale-95 transition-all"
+            >
+              <FiPlus /> Add Application
+            </button>
+          </div>
+        </div>
+
+        <div className="flex flex-wrap gap-3 mb-6">
+          <input
+            placeholder="Search company or role..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="flex-1 min-w-[200px] border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+          />
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            className="border border-gray-300 rounded-lg px-3 py-2 text-sm"
           >
-            <FiPlus /> Add Application
-          </button>
+            <option value="">All Statuses</option>
+            <option>Applied</option>
+            <option>OA</option>
+            <option>Interview</option>
+            <option>Offer</option>
+            <option>Rejected</option>
+          </select>
+          <select
+            value={typeFilter}
+            onChange={(e) => setTypeFilter(e.target.value)}
+            className="border border-gray-300 rounded-lg px-3 py-2 text-sm"
+          >
+            <option value="">All Types</option>
+            <option>Core Engineering</option>
+            <option>Software/IT</option>
+            <option>Data Science</option>
+            <option>Other</option>
+          </select>
         </div>
 
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
           {apps.length === 0 ? (
             <EmptyState
-              title="No applications yet"
-              subtitle="Add your first one to start tracking your placement journey"
+              title="No applications found"
+              subtitle="Try adjusting your filters, or add your first application"
             />
           ) : (
             <table className="w-full text-left text-sm">

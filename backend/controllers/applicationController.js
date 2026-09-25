@@ -11,7 +11,19 @@ exports.createApplication = async (req, res) => {
 
 exports.getApplications = async (req, res) => {
   try {
-    const apps = await Application.find({ user: req.user._id }).sort({ appliedDate: -1 });
+    const { status, roleType, search } = req.query;
+    const filter = { user: req.user._id };
+
+    if (status) filter.status = status;
+    if (roleType) filter.roleType = roleType;
+    if (search) {
+      filter.$or = [
+        { company: { $regex: search, $options: "i" } },
+        { roleTitle: { $regex: search, $options: "i" } },
+      ];
+    }
+
+    const apps = await Application.find(filter).sort({ appliedDate: -1 });
     res.json(apps);
   } catch (err) {
     res.status(500).json({ message: err.message });
