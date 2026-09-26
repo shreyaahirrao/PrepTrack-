@@ -16,6 +16,24 @@ Most placement trackers are just spreadsheets or generic to-do apps — they don
 
 Built for students of **any branch** (Core Engineering, Software/IT, Data Science, or otherwise) with a **flexible prep duration** — not locked to a fixed 6-month timeline.
 
+## 📸 Screenshots
+
+### Landing Page
+![Landing](./screenshots/landing.png)
+![Landing Features](./screenshots/landing-features.png)
+
+### Dashboard
+![Dashboard](./screenshots/dashboard.png)
+
+### Applications
+![Applications](./screenshots/applications.png)
+
+### Roadmap
+![Roadmap](./screenshots/roadmap.png)
+
+### Profile & Settings
+![Profile](./screenshots/profile.png)
+
 ## ✨ Features
 
 **Application Tracking**
@@ -51,12 +69,6 @@ Built for students of **any branch** (Core Engineering, Software/IT, Data Scienc
 **Backend:** Node.js, Express, MongoDB (Atlas), Mongoose, JWT (cookie-based auth), bcrypt
 **Deployment:** Vercel (frontend), Render (backend), MongoDB Atlas (database)
 
-## 📸 Screenshots
-
-| Landing Page | Dashboard | Applications |
-|---|---|---|
-| *(add screenshot)* | *(add screenshot)* | *(add screenshot)* |
-
 ## 🏗️ Project Structure
 
 ```
@@ -70,12 +82,13 @@ preptrack/
 │   ├── jobs/            # Cron jobs (follow-up reminders)
 │   ├── utils/           # Email helper
 │   └── server.js
-└── frontend/
-    ├── src/
-    │   ├── components/  # Reusable UI (Navbar, EmptyState, ProgressRing, StatusChart, etc.)
-    │   ├── pages/        # Landing, Login, Register, Dashboard, Applications, Roadmap, Profile
-    │   ├── context/      # Auth and Theme contexts
-    │   └── api/          # Axios instance
+├── frontend/
+│   ├── src/
+│   │   ├── components/  # Reusable UI (Navbar, EmptyState, ProgressRing, StatusChart, etc.)
+│   │   ├── pages/        # Landing, Login, Register, Dashboard, Applications, Roadmap, Profile
+│   │   ├── context/      # Auth and Theme contexts
+│   │   └── api/          # Axios instance
+└── screenshots/          # README images
 ```
 
 ## 🚀 Getting Started Locally
