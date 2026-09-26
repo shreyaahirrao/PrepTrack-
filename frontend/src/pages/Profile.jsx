@@ -55,51 +55,50 @@ const Profile = () => {
   return (
     <PageTransition>
       <div className="max-w-2xl mx-auto px-6 py-10">
-        <h1 className="text-2xl font-bold mb-6">Profile & Settings</h1>
+        <h1 className="text-2xl font-bold mb-6 text-gray-900 dark:text-gray-100">Profile & Settings</h1>
 
-        {/* Account info card */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6"
+          className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-6 mb-6"
         >
           <div className="flex items-center gap-4 mb-6">
             <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white text-2xl font-bold">
               {user?.name?.[0]?.toUpperCase() || <FiUser />}
             </div>
             <div>
-              <p className="font-bold text-lg">{user?.name}</p>
-              <p className="text-gray-400 text-sm">{user?.email}</p>
+              <p className="font-bold text-lg text-gray-900 dark:text-gray-100">{user?.name}</p>
+              <p className="text-gray-400 dark:text-gray-500 text-sm">{user?.email}</p>
             </div>
           </div>
 
           <form onSubmit={handleSave} className="space-y-4">
             <div>
-              <label className="text-sm text-gray-600 mb-1 block">Full name</label>
+              <label className="text-sm text-gray-600 dark:text-gray-400 mb-1 block">Full name</label>
               <input
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary/50"
+                className="w-full border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary/50"
               />
             </div>
             <div>
-              <label className="text-sm text-gray-600 mb-1 block">Branch</label>
+              <label className="text-sm text-gray-600 dark:text-gray-400 mb-1 block">Branch</label>
               <input
                 value={form.branch}
                 onChange={(e) => setForm({ ...form, branch: e.target.value })}
-                className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary/50"
+                className="w-full border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary/50"
               />
             </div>
             <div>
-              <label className="text-sm text-gray-600 mb-1 block">Prep duration (weeks)</label>
+              <label className="text-sm text-gray-600 dark:text-gray-400 mb-1 block">Prep duration (weeks)</label>
               <input
                 type="number"
                 min="1"
                 value={form.prepDurationWeeks}
                 onChange={(e) => setForm({ ...form, prepDurationWeeks: Number(e.target.value) })}
-                className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary/50"
+                className="w-full border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary/50"
               />
-              <p className="text-xs text-gray-400 mt-1">
+              <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
                 Change this anytime — your days remaining will recalculate automatically.
               </p>
             </div>
@@ -113,38 +112,37 @@ const Profile = () => {
           </form>
         </motion.div>
 
-        {/* Timeline card */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6"
+          className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-6"
         >
           <div className="flex items-center gap-2 mb-4">
             <FiClock className="text-secondary" size={20} />
-            <h2 className="font-bold">Prep Timeline</h2>
+            <h2 className="font-bold text-gray-900 dark:text-gray-100">Prep Timeline</h2>
           </div>
 
           <div className="grid grid-cols-2 gap-4 mb-5">
             <div>
-              <p className="text-xs text-gray-400">Started on</p>
-              <p className="font-medium">
+              <p className="text-xs text-gray-400 dark:text-gray-500">Started on</p>
+              <p className="font-medium text-gray-900 dark:text-gray-100">
                 {prepStartDate ? prepStartDate.toLocaleDateString() : "—"}
               </p>
             </div>
             <div>
-              <p className="text-xs text-gray-400">Ends on</p>
-              <p className="font-medium">
+              <p className="text-xs text-gray-400 dark:text-gray-500">Ends on</p>
+              <p className="font-medium text-gray-900 dark:text-gray-100">
                 {prepEndDate ? prepEndDate.toLocaleDateString() : "—"}
               </p>
             </div>
             <div>
-              <p className="text-xs text-gray-400">Days remaining</p>
+              <p className="text-xs text-gray-400 dark:text-gray-500">Days remaining</p>
               <p className="font-medium text-primary">{daysRemaining ?? "—"} days</p>
             </div>
             <div>
-              <p className="text-xs text-gray-400">Duration</p>
-              <p className="font-medium">{form.prepDurationWeeks} weeks</p>
+              <p className="text-xs text-gray-400 dark:text-gray-500">Duration</p>
+              <p className="font-medium text-gray-900 dark:text-gray-100">{form.prepDurationWeeks} weeks</p>
             </div>
           </div>
 
@@ -155,7 +153,7 @@ const Profile = () => {
           >
             <FiRefreshCw /> Reset Timeline to Start Today
           </button>
-          <p className="text-xs text-gray-400 mt-2 text-center">
+          <p className="text-xs text-gray-400 dark:text-gray-500 mt-2 text-center">
             This resets your start date to today, keeping your current duration. Useful if you fell behind and want a fresh countdown.
           </p>
         </motion.div>

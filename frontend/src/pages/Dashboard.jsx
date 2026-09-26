@@ -37,25 +37,25 @@ const Dashboard = () => {
     <PageTransition>
       <div className="max-w-5xl mx-auto px-6 py-10">
         <ProjectInfoBanner />
-        <h1 className="text-2xl font-bold mb-6">Your Progress</h1>
+        <h1 className="text-2xl font-bold mb-6 text-gray-900 dark:text-gray-100">Your Progress</h1>
 
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-6 mb-6">
           <div className="flex items-center gap-6">
             <ProgressRing percent={progress.percentComplete} />
             <div className="flex-1">
               <div className="flex justify-between items-center mb-2">
-                <span className="text-gray-600 font-medium">
+                <span className="text-gray-600 dark:text-gray-300 font-medium">
                   {progress.completedTopics} / {progress.totalTopics} topics done
                 </span>
-                <span className="text-sm text-gray-400">{progress.daysRemaining} days remaining</span>
+                <span className="text-sm text-gray-400 dark:text-gray-500">{progress.daysRemaining} days remaining</span>
               </div>
-              <div className="w-full h-4 bg-gray-100 rounded-full overflow-hidden">
+              <div className="w-full h-4 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
                 <div
                   className="h-full bg-gradient-to-r from-primary to-secondary rounded-full transition-all duration-700 ease-out"
                   style={{ width: `${progress.percentComplete}%` }}
                 />
               </div>
-              <p className="text-sm text-gray-400 mt-2">{progress.percentComplete}% complete</p>
+              <p className="text-sm text-gray-400 dark:text-gray-500 mt-2">{progress.percentComplete}% complete</p>
             </div>
           </div>
         </div>
@@ -73,13 +73,13 @@ const Dashboard = () => {
         </div>
 
         {overdue.length > 0 && (
-          <div className="bg-red-50 border border-red-200 rounded-xl p-5">
-            <h2 className="text-red-600 font-semibold mb-2">
+          <div className="bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 rounded-xl p-5">
+            <h2 className="text-red-600 dark:text-red-400 font-semibold mb-2">
               ⚠ {overdue.length} overdue follow-up{overdue.length > 1 ? "s" : ""}
             </h2>
             <ul className="space-y-1">
               {overdue.map((app) => (
-                <li key={app._id} className="text-sm text-red-500">
+                <li key={app._id} className="text-sm text-red-500 dark:text-red-400">
                   {app.company} — {app.roleTitle}
                 </li>
               ))}
@@ -96,12 +96,12 @@ const StatCard = ({ label, value, color = "text-primary" }) => (
     initial={{ opacity: 0, y: 10 }}
     animate={{ opacity: 1, y: 0 }}
     whileHover={{ y: -4 }}
-    className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center"
+    className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-5 text-center"
   >
     <p className={`text-2xl font-bold ${color}`}>
       {typeof value === "number" ? <AnimatedNumber value={value} /> : value}
     </p>
-    <p className="text-sm text-gray-500 mt-1">{label}</p>
+    <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{label}</p>
   </motion.div>
 );
 

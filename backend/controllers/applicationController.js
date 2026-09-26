@@ -2,7 +2,11 @@ const Application = require("../models/Application");
 
 exports.createApplication = async (req, res) => {
   try {
-    const app = await Application.create({ ...req.body, user: req.user._id });
+    const app = await Application.create({
+      ...req.body,
+      user: req.user._id,
+      statusHistory: [{ status: req.body.status || "Applied", changedAt: new Date() }],
+    });
     res.status(201).json(app);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -11,7 +15,7 @@ exports.createApplication = async (req, res) => {
 
 exports.getApplications = async (req, res) => {
   try {
-    const { status, roleType, search } = req.query;
+    const { status, roleType, search, sortBy } = req.query;
     const filter = { user: req.user._id };
 
     if (status) filter.status = status;
@@ -23,7 +27,10 @@ exports.getApplications = async (req, res) => {
       ];
     }
 
-    const apps = await Application.find(filter).sort({ appliedDate: -1 });
+    let sort = { appliedDate: -1 };
+    if (sortBy === "priority") sort = { priority: -1 };
+
+    const apps = await Application.find(filter).sort(sort);
     res.json(apps);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -32,12 +39,20 @@ exports.getApplications = async (req, res) => {
 
 exports.updateApplication = async (req, res) => {
   try {
+    const existing = await Application.findOne({ _id: req.params.id, user: req.user._id });
+    if (!existing) return res.status(404).json({ message: "Not found" });
+
+    const update = { ...req.body };
+
+    if (update.status && update.status !== existing.status) {
+      update.$push = { statusHistory: { status: update.status, changedAt: new Date() } };
+    }
+
     const app = await Application.findOneAndUpdate(
       { _id: req.params.id, user: req.user._id },
-      req.body,
+      update,
       { new: true }
     );
-    if (!app) return res.status(404).json({ message: "Not found" });
     res.json(app);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -62,6 +77,20 @@ exports.getOverdueFollowUps = async (req, res) => {
       status: { $nin: ["Offer", "Rejected"] },
     });
     res.json(apps);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.addInterviewQuestion = async (req, res) => {
+  try {
+    const { question } = req.body;
+    const app = await Application.findOneAndUpdate(
+      { _id: req.params.id, user: req.user._id },
+      { $push: { "interviewNotes.questions": question } },
+      { new: true }
+    );
+    res.json(app);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

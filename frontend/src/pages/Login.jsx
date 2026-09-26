@@ -26,10 +26,10 @@ const Login = () => {
 
   return (
     <PageTransition>
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/10 to-secondary/10 px-4">
-        <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
-          <h1 className="text-2xl font-bold text-center mb-1">Welcome back</h1>
-          <p className="text-gray-500 text-center mb-6 text-sm">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/10 to-secondary/10 dark:from-gray-900 dark:to-gray-950 px-4">
+        <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl w-full max-w-md">
+          <h1 className="text-2xl font-bold text-center mb-1 text-gray-900 dark:text-gray-100">Welcome back</h1>
+          <p className="text-gray-500 dark:text-gray-400 text-center mb-6 text-sm">
             Log in to continue your prep journey.
           </p>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -39,7 +39,7 @@ const Login = () => {
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
               required
-              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="w-full border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary/50"
             />
             <input
               type="password"
@@ -47,7 +47,7 @@ const Login = () => {
               value={form.password}
               onChange={(e) => setForm({ ...form, password: e.target.value })}
               required
-              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="w-full border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary/50"
             />
             <button
               type="submit"
@@ -57,7 +57,7 @@ const Login = () => {
               {loading ? "Logging in..." : "Log in"}
             </button>
           </form>
-          <p className="text-center text-sm text-gray-500 mt-4">
+          <p className="text-center text-sm text-gray-500 dark:text-gray-400 mt-4">
             Don't have an account?{" "}
             <Link to="/register" className="text-primary font-medium">
               Sign up

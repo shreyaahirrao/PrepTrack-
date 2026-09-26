@@ -45,7 +45,7 @@ const features = [
 const Landing = () => {
   return (
     <PageTransition>
-      <div className="min-h-screen bg-gradient-to-br from-primary/10 via-white to-secondary/10">
+      <div className="min-h-screen bg-gradient-to-br from-primary/10 via-white to-secondary/10 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
         {/* Hero */}
         <div className="max-w-5xl mx-auto px-6 pt-20 pb-16 text-center">
           <motion.div
@@ -59,7 +59,7 @@ const Landing = () => {
             <h1 className="text-5xl md:text-6xl font-extrabold mb-5 bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent leading-tight">
               PrepTrack
             </h1>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-8">
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-8">
               The dashboard that ties your job applications directly to your prep roadmap —
               so you always know where you stand and what's next.
             </p>
@@ -72,14 +72,13 @@ const Landing = () => {
               </Link>
               <Link
                 to="/login"
-                className="bg-white text-gray-700 px-8 py-3 rounded-xl font-semibold text-lg border border-gray-200 hover:bg-gray-50 active:scale-95 transition-all"
+                className="bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 px-8 py-3 rounded-xl font-semibold text-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 active:scale-95 transition-all"
               >
                 Log In
               </Link>
             </div>
           </motion.div>
 
-          {/* Hero illustration */}
           <motion.svg
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -113,7 +112,7 @@ const Landing = () => {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="text-3xl font-bold text-center mb-10"
+            className="text-3xl font-bold text-center mb-10 text-gray-900 dark:text-gray-100"
           >
             Everything your placement prep needs
           </motion.h2>
@@ -126,13 +125,13 @@ const Landing = () => {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08 }}
                 whileHover={{ y: -6 }}
-                className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100"
+                className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700"
               >
                 <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-4 ${f.color}`}>
                   {f.icon}
                 </div>
-                <h3 className="font-bold text-lg mb-2">{f.title}</h3>
-                <p className="text-gray-500 text-sm">{f.desc}</p>
+                <h3 className="font-bold text-lg mb-2 text-gray-900 dark:text-gray-100">{f.title}</h3>
+                <p className="text-gray-500 dark:text-gray-400 text-sm">{f.desc}</p>
               </motion.div>
             ))}
           </div>

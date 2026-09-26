@@ -65,26 +65,26 @@ const Roadmap = () => {
       <div className="max-w-5xl mx-auto px-6 py-10 grid md:grid-cols-2 gap-8">
         {/* Topics */}
         <div>
-          <h2 className="text-xl font-bold mb-4">Prep Topics</h2>
-          <form onSubmit={addTopic} className="flex flex-col gap-2 mb-4 bg-white p-4 rounded-xl border border-gray-100">
+          <h2 className="text-xl font-bold mb-4 text-gray-900 dark:text-gray-100">Prep Topics</h2>
+          <form onSubmit={addTopic} className="flex flex-col gap-2 mb-4 bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-100 dark:border-gray-700">
             <input
               placeholder="Topic title (e.g. Dynamic Programming)"
               value={newTopic.title}
               onChange={(e) => setNewTopic({ ...newTopic, title: e.target.value })}
-              className="border border-gray-300 rounded-lg px-3 py-2 text-sm"
+              className="border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 rounded-lg px-3 py-2 text-sm"
             />
             <input
               placeholder="Category (e.g. DSA, Core Subject, Aptitude)"
               value={newTopic.category}
               onChange={(e) => setNewTopic({ ...newTopic, category: e.target.value })}
-              className="border border-gray-300 rounded-lg px-3 py-2 text-sm"
+              className="border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 rounded-lg px-3 py-2 text-sm"
             />
             <input
               type="number"
               placeholder="Problems target (optional)"
               value={newTopic.problemsTarget}
               onChange={(e) => setNewTopic({ ...newTopic, problemsTarget: Number(e.target.value) })}
-              className="border border-gray-300 rounded-lg px-3 py-2 text-sm"
+              className="border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 rounded-lg px-3 py-2 text-sm"
             />
             <button className="flex items-center justify-center gap-1.5 bg-primary text-white py-2 rounded-lg text-sm font-medium hover:opacity-90 active:scale-95 transition-all">
               <FiPlus /> Add Topic
@@ -103,15 +103,17 @@ const Roadmap = () => {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 10 }}
                     className={`p-3 rounded-xl border ${
-                      t.completed ? "bg-green-50 border-green-100" : "bg-white border-gray-100"
+                      t.completed
+                        ? "bg-green-50 dark:bg-green-950/30 border-green-100 dark:border-green-900"
+                        : "bg-white dark:bg-gray-800 border-gray-100 dark:border-gray-700"
                     }`}
                   >
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className={`font-medium ${t.completed ? "line-through text-gray-400" : ""}`}>
+                        <p className={`font-medium ${t.completed ? "line-through text-gray-400 dark:text-gray-500" : "text-gray-900 dark:text-gray-100"}`}>
                           {t.title}
                         </p>
-                        <p className="text-xs text-gray-400">
+                        <p className="text-xs text-gray-400 dark:text-gray-500">
                           {t.category}
                           {t.problemsTarget > 0 && ` · ${t.problemsSolved}/${t.problemsTarget} problems`}
                         </p>
@@ -129,21 +131,21 @@ const Roadmap = () => {
                         <button
                           onClick={() => toggleComplete(t)}
                           className={`p-1.5 rounded-full active:scale-90 transition-transform ${
-                            t.completed ? "bg-green-500 text-white" : "bg-gray-100 text-gray-400"
+                            t.completed ? "bg-green-500 text-white" : "bg-gray-100 dark:bg-gray-700 text-gray-400 dark:text-gray-300"
                           }`}
                         >
                           <FiCheck size={14} />
                         </button>
                         <button
                           onClick={() => deleteTopic(t._id)}
-                          className="p-1.5 rounded-full bg-gray-100 text-gray-400 hover:text-red-500 active:scale-90 transition-transform"
+                          className="p-1.5 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-400 dark:text-gray-300 hover:text-red-500 active:scale-90 transition-transform"
                         >
                           <FiTrash2 size={14} />
                         </button>
                       </div>
                     </div>
                     {t.problemsTarget > 0 && (
-                      <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden mt-2">
+                      <div className="w-full h-1.5 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden mt-2">
                         <div
                           className="h-full bg-secondary rounded-full transition-all duration-500"
                           style={{
@@ -161,12 +163,12 @@ const Roadmap = () => {
 
         {/* Milestones */}
         <div>
-          <h2 className="text-xl font-bold mb-4">Milestones</h2>
-          <form onSubmit={addMilestone} className="flex flex-col gap-2 mb-4 bg-white p-4 rounded-xl border border-gray-100">
+          <h2 className="text-xl font-bold mb-4 text-gray-900 dark:text-gray-100">Milestones</h2>
+          <form onSubmit={addMilestone} className="flex flex-col gap-2 mb-4 bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-100 dark:border-gray-700">
             <select
               value={newMilestone.type}
               onChange={(e) => setNewMilestone({ ...newMilestone, type: e.target.value })}
-              className="border border-gray-300 rounded-lg px-3 py-2 text-sm"
+              className="border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 rounded-lg px-3 py-2 text-sm"
             >
               <option>Mock Interview</option>
               <option>Resume Review</option>
@@ -177,7 +179,7 @@ const Roadmap = () => {
               placeholder="Title (e.g. Mock with senior at Infosys)"
               value={newMilestone.title}
               onChange={(e) => setNewMilestone({ ...newMilestone, title: e.target.value })}
-              className="border border-gray-300 rounded-lg px-3 py-2 text-sm"
+              className="border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 rounded-lg px-3 py-2 text-sm"
             />
             <button className="flex items-center justify-center gap-1.5 bg-secondary text-white py-2 rounded-lg text-sm font-medium hover:opacity-90 active:scale-95 transition-all">
               <FiPlus /> Log Milestone
@@ -189,9 +191,9 @@ const Roadmap = () => {
           ) : (
             <div className="space-y-2">
               {milestones.map((m) => (
-                <div key={m._id} className="p-3 rounded-xl border border-gray-100 bg-white">
-                  <p className="font-medium text-sm">{m.title}</p>
-                  <p className="text-xs text-gray-400">
+                <div key={m._id} className="p-3 rounded-xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800">
+                  <p className="font-medium text-sm text-gray-900 dark:text-gray-100">{m.title}</p>
+                  <p className="text-xs text-gray-400 dark:text-gray-500">
                     {m.type} · {new Date(m.date).toLocaleDateString()}
                   </p>
                 </div>

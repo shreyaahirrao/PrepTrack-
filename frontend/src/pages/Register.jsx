@@ -35,10 +35,10 @@ const Register = () => {
 
   return (
     <PageTransition>
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/10 to-secondary/10 px-4">
-        <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
-          <h1 className="text-2xl font-bold text-center mb-1">Create your account</h1>
-          <p className="text-gray-500 text-center mb-6 text-sm">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/10 to-secondary/10 dark:from-gray-900 dark:to-gray-950 px-4">
+        <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl w-full max-w-md">
+          <h1 className="text-2xl font-bold text-center mb-1 text-gray-900 dark:text-gray-100">Create your account</h1>
+          <p className="text-gray-500 dark:text-gray-400 text-center mb-6 text-sm">
             Track your placement journey, your way.
           </p>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -48,7 +48,7 @@ const Register = () => {
               value={form.name}
               onChange={handleChange}
               required
-              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="w-full border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary/50"
             />
             <input
               name="email"
@@ -57,7 +57,7 @@ const Register = () => {
               value={form.email}
               onChange={handleChange}
               required
-              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="w-full border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary/50"
             />
             <input
               name="password"
@@ -66,7 +66,7 @@ const Register = () => {
               value={form.password}
               onChange={handleChange}
               required
-              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="w-full border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary/50"
             />
             <input
               name="branch"
@@ -74,10 +74,10 @@ const Register = () => {
               value={form.branch}
               onChange={handleChange}
               required
-              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="w-full border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary/50"
             />
             <div>
-              <label className="text-sm text-gray-600 mb-1 block">
+              <label className="text-sm text-gray-600 dark:text-gray-400 mb-1 block">
                 Prep duration (weeks)
               </label>
               <input
@@ -87,7 +87,7 @@ const Register = () => {
                 value={form.prepDurationWeeks}
                 onChange={handleChange}
                 required
-                className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary/50"
+                className="w-full border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary/50"
               />
             </div>
             <button
@@ -98,7 +98,7 @@ const Register = () => {
               {loading ? "Creating account..." : "Sign up"}
             </button>
           </form>
-          <p className="text-center text-sm text-gray-500 mt-4">
+          <p className="text-center text-sm text-gray-500 dark:text-gray-400 mt-4">
             Already have an account?{" "}
             <Link to="/login" className="text-primary font-medium">
               Log in

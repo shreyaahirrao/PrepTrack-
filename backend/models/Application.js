@@ -18,11 +18,33 @@ const applicationSchema = new mongoose.Schema(
     appliedDate: { type: Date, default: Date.now },
     nextFollowUpDate: { type: Date },
     notes: { type: String },
+
+    priority: { type: Number, min: 1, max: 5, default: 3 },
+
+    referral: {
+      name: { type: String, default: "" },
+      linkedin: { type: String, default: "" },
+      followedUp: { type: Boolean, default: false },
+    },
+
+    interviewNotes: {
+      questions: [{ type: String }],
+      interviewerNotes: { type: String, default: "" },
+      rounds: { type: Number, default: 0 },
+    },
+
+    statusHistory: [
+      {
+        status: String,
+        changedAt: { type: Date, default: Date.now },
+      },
+    ],
+
+    reminderSent: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
 
-// Virtual: is this application overdue for follow-up?
 applicationSchema.virtual("isOverdue").get(function () {
   if (!this.nextFollowUpDate) return false;
   if (["Offer", "Rejected"].includes(this.status)) return false;

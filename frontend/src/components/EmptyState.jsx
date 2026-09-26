@@ -20,8 +20,8 @@ const EmptyState = ({ title, subtitle }) => (
       <circle cx="140" cy="65" r="18" fill="#22d3ee" opacity="0.8" />
       <path d="M133 65l5 5 9-10" stroke="white" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round" />
     </motion.svg>
-    <h3 className="text-gray-600 font-medium mt-4">{title}</h3>
-    {subtitle && <p className="text-sm text-gray-400 mt-1">{subtitle}</p>}
+    <h3 className="text-gray-600 dark:text-gray-300 font-medium mt-4">{title}</h3>
+    {subtitle && <p className="text-sm text-gray-400 dark:text-gray-500 mt-1">{subtitle}</p>}
   </motion.div>
 );
 

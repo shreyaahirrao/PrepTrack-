@@ -22,8 +22,8 @@ const StatusChart = ({ applications }) => {
   if (data.length === 0) return null;
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6">
-      <h3 className="font-bold mb-4">Application Status Breakdown</h3>
+    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-6 mb-6">
+      <h3 className="font-bold mb-4 text-gray-900 dark:text-gray-100">Application Status Breakdown</h3>
       <ResponsiveContainer width="100%" height={220}>
         <PieChart>
           <Pie
@@ -40,8 +40,15 @@ const StatusChart = ({ applications }) => {
               <Cell key={entry.name} fill={COLORS[entry.name] || "#a5b4fc"} />
             ))}
           </Pie>
-          <Tooltip />
-          <Legend />
+          <Tooltip
+            contentStyle={{
+              backgroundColor: "var(--tooltip-bg, #fff)",
+              border: "none",
+              borderRadius: "8px",
+            }}
+            wrapperClassName="dark:[&_.recharts-default-tooltip]:!bg-gray-800 dark:[&_.recharts-default-tooltip]:!border-gray-700 dark:[&_.recharts-default-tooltip]:!text-gray-100"
+          />
+          <Legend wrapperStyle={{ fontSize: "13px" }} />
         </PieChart>
       </ResponsiveContainer>
     </div>

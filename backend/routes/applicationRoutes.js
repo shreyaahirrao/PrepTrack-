@@ -7,11 +7,13 @@ const {
   updateApplication,
   deleteApplication,
   getOverdueFollowUps,
+  addInterviewQuestion,
 } = require("../controllers/applicationController");
 
 router.use(protect);
 router.route("/").post(createApplication).get(getApplications);
 router.get("/overdue", getOverdueFollowUps);
 router.route("/:id").put(updateApplication).delete(deleteApplication);
+router.post("/:id/questions", addInterviewQuestion);
 
 module.exports = router;
