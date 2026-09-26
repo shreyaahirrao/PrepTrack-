@@ -75,3 +75,23 @@ exports.logout = (req, res) => {
 exports.getMe = async (req, res) => {
   res.json(req.user);
 };
+
+exports.updateProfile = async (req, res) => {
+  try {
+    const { name, branch, prepDurationWeeks, resetStartDate } = req.body;
+    const updates = {};
+
+    if (name) updates.name = name;
+    if (branch) updates.branch = branch;
+    if (prepDurationWeeks) updates.prepDurationWeeks = prepDurationWeeks;
+    if (resetStartDate) updates.prepStartDate = new Date();
+
+    const user = await User.findByIdAndUpdate(req.user._id, updates, {
+      new: true,
+    }).select("-password");
+
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};

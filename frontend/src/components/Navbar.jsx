@@ -1,8 +1,8 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { FiLogOut, FiGrid, FiBriefcase, FiMap } from "react-icons/fi";
+import { FiLogOut, FiGrid, FiBriefcase, FiMap, FiUser } from "react-icons/fi";
 import { motion } from "framer-motion";
-<Link to="/dashboard" className="text-3xl font-extrabold ..."></Link>
+
 const Navbar = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
@@ -14,15 +14,16 @@ const Navbar = () => {
   };
 
   const links = [
-  { to: "/dashboard", label: "Dashboard", icon: <FiGrid size={20} /> },
-  { to: "/applications", label: "Applications", icon: <FiBriefcase size={20} /> },
-  { to: "/roadmap", label: "Roadmap", icon: <FiMap size={20} /> },
-];
+    { to: "/dashboard", label: "Dashboard", icon: <FiGrid size={20} /> },
+    { to: "/applications", label: "Applications", icon: <FiBriefcase size={20} /> },
+    { to: "/roadmap", label: "Roadmap", icon: <FiMap size={20} /> },
+    { to: "/profile", label: "Profile", icon: <FiUser size={20} /> },
+  ];
 
   return (
     <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200 px-8 py-5 flex items-center justify-between sticky top-0 z-10 shadow-sm">
       <Link
-        to="/"
+        to="/dashboard"
         className="text-3xl font-extrabold bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent"
       >
         PrepTrack
