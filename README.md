@@ -18,17 +18,36 @@ Built for students of **any branch** (Core Engineering, Software/IT, Data Scienc
 
 ## ✨ Features
 
-- **Application Tracker** — Log every application with company, role type, and status (Applied → OA → Interview → Offer/Rejected)
-- **Prep Roadmap Sync** — Track topics covered, DSA problems solved, and mock interviews completed
-- **Visual Progress** — Animated progress bar and ring showing "days remaining vs topics left"
-- **Auto-Flagged Follow-ups** — Overdue application follow-ups surface automatically on the dashboard
-- **Flexible Duration** — Set your own prep timeline in weeks, not a fixed 6 months
-- **Branch-Agnostic** — Free-text categories mean it works for any engineering branch or role type
-- **Polished UI** — Page transitions, animated counters, empty-state illustrations, and micro-interactions throughout (Framer Motion)
+**Application Tracking**
+- Log applications with company, role type, and status (Applied → OA → Interview → Offer/Rejected)
+- Search and filter by company/role name, status, and role type
+- Priority rating (1–5 stars) to flag which roles matter most
+- Referral tracking — contact name, LinkedIn link, and a "followed up" checkbox
+- Auto-logged status timeline showing exactly when each stage change happened
+- Per-application interview question log, to remember what you were asked
+- Auto-flagged overdue follow-ups
+- Export all applications to CSV
+
+**Prep Roadmap**
+- Track topics covered, categorized however you like (DSA, Core Subject, Aptitude, etc.)
+- Log DSA problems solved vs. target per topic, with a mini progress bar
+- Log milestones — mock interviews, resume reviews, test series
+- Flexible prep duration (in weeks) — not locked to any fixed timeline
+- Editable anytime from a dedicated Profile page, including a one-click "reset timeline to today"
+
+**Dashboard**
+- Visual progress ring + bar for "days remaining vs topics left"
+- Application status breakdown chart (pie/donut)
+- Animated stat cards for topics left, DSA problems solved, and mock interviews completed
+
+**UI/UX**
+- Full dark mode, persisted across sessions
+- Page transitions, animated counters, and empty-state illustrations throughout (Framer Motion)
+- Responsive, mobile-friendly layout
 
 ## 🛠️ Tech Stack
 
-**Frontend:** React (Vite), Tailwind CSS, Framer Motion, React Router, Axios, Recharts, React Icons, React Hot Toast
+**Frontend:** React (Vite), Tailwind CSS, Framer Motion, React Router, Axios, Recharts, React Icons, React Hot Toast, PapaParse
 **Backend:** Node.js, Express, MongoDB (Atlas), Mongoose, JWT (cookie-based auth), bcrypt
 **Deployment:** Vercel (frontend), Render (backend), MongoDB Atlas (database)
 
@@ -48,12 +67,14 @@ preptrack/
 │   ├── controllers/     # Route logic
 │   ├── routes/          # API endpoints
 │   ├── middleware/      # Auth middleware
+│   ├── jobs/            # Cron jobs (follow-up reminders)
+│   ├── utils/           # Email helper
 │   └── server.js
 └── frontend/
     ├── src/
-    │   ├── components/  # Reusable UI (Navbar, EmptyState, ProgressRing, etc.)
-    │   ├── pages/        # Landing, Login, Register, Dashboard, Applications, Roadmap
-    │   ├── context/      # Auth context
+    │   ├── components/  # Reusable UI (Navbar, EmptyState, ProgressRing, StatusChart, etc.)
+    │   ├── pages/        # Landing, Login, Register, Dashboard, Applications, Roadmap, Profile
+    │   ├── context/      # Auth and Theme contexts
     │   └── api/          # Axios instance
 ```
 
@@ -80,7 +101,11 @@ PORT=5000
 MONGO_URI=your_mongodb_atlas_connection_string
 JWT_SECRET=your_jwt_secret
 CLIENT_URL=http://localhost:5173
+EMAIL_USER=your_gmail_address
+EMAIL_PASS=your_gmail_app_password
 ```
+(`EMAIL_USER`/`EMAIL_PASS` are only needed if you want the daily follow-up reminder emails to send — otherwise the app runs fine without them.)
+
 Run it:
 ```bash
 npm run dev
@@ -109,9 +134,11 @@ Visit `http://localhost:5173` in your browser.
 | POST | `/api/auth/register` | Create a new account |
 | POST | `/api/auth/login` | Log in |
 | GET | `/api/auth/me` | Get current user |
-| GET/POST | `/api/applications` | List / create applications |
+| PUT | `/api/auth/me` | Update profile / prep duration / reset timeline |
+| GET/POST | `/api/applications` | List (with search/filter) / create applications |
 | PUT/DELETE | `/api/applications/:id` | Update / delete an application |
 | GET | `/api/applications/overdue` | Get overdue follow-ups |
+| POST | `/api/applications/:id/questions` | Log an interview question for an application |
 | GET/POST | `/api/roadmap/topics` | List / create prep topics |
 | PUT/DELETE | `/api/roadmap/topics/:id` | Update / delete a topic |
 | GET | `/api/roadmap/progress` | Get overall progress summary |
@@ -119,7 +146,7 @@ Visit `http://localhost:5173` in your browser.
 
 ## 🎯 Why This Project
 
-Ties directly to a real placement timeline — application CRUD, prep-roadmap sync, and deadline logic combined in one schema-linked system, rather than treating job hunting and prep as separate spreadsheets.
+Ties directly to a real placement timeline — application CRUD, prep-roadmap sync, and deadline logic combined in one schema-linked system, rather than treating job hunting and prep as separate spreadsheets. Extended beyond the basics with priority scoring, referral tracking, and interview question logging — features that mirror how people actually manage a real job search, not just a tutorial CRUD app.
 
 ## 🧩 Deployment Notes
 
