@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../api/axios";
 import toast from "react-hot-toast";
-import { FiPlus, FiCheck, FiTrash2 } from "react-icons/fi";
+import { FiPlus, FiCheck, FiTrash2, FiTrendingUp } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 import PageTransition from "../components/PageTransition";
 import EmptyState from "../components/EmptyState";
@@ -37,6 +37,17 @@ const Roadmap = () => {
 
   const deleteTopic = async (id) => {
     await api.delete(`/roadmap/topics/${id}`);
+    fetchAll();
+  };
+
+  const incrementSolved = async (topic) => {
+    if (topic.problemsSolved >= topic.problemsTarget) {
+      toast.success("Target already reached! 🎉");
+      return;
+    }
+    await api.put(`/roadmap/topics/${topic._id}`, {
+      problemsSolved: topic.problemsSolved + 1,
+    });
     fetchAll();
   };
 
@@ -91,35 +102,56 @@ const Roadmap = () => {
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 10 }}
-                    className={`flex items-center justify-between p-3 rounded-xl border ${
+                    className={`p-3 rounded-xl border ${
                       t.completed ? "bg-green-50 border-green-100" : "bg-white border-gray-100"
                     }`}
                   >
-                    <div>
-                      <p className={`font-medium ${t.completed ? "line-through text-gray-400" : ""}`}>
-                        {t.title}
-                      </p>
-                      <p className="text-xs text-gray-400">
-                        {t.category}
-                        {t.problemsTarget > 0 && ` · ${t.problemsSolved}/${t.problemsTarget} problems`}
-                      </p>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className={`font-medium ${t.completed ? "line-through text-gray-400" : ""}`}>
+                          {t.title}
+                        </p>
+                        <p className="text-xs text-gray-400">
+                          {t.category}
+                          {t.problemsTarget > 0 && ` · ${t.problemsSolved}/${t.problemsTarget} problems`}
+                        </p>
+                      </div>
+                      <div className="flex gap-2">
+                        {t.problemsTarget > 0 && (
+                          <button
+                            onClick={() => incrementSolved(t)}
+                            title="Add 1 solved problem"
+                            className="p-1.5 rounded-full bg-secondary/10 text-secondary hover:bg-secondary/20 active:scale-90 transition-all"
+                          >
+                            <FiTrendingUp size={14} />
+                          </button>
+                        )}
+                        <button
+                          onClick={() => toggleComplete(t)}
+                          className={`p-1.5 rounded-full active:scale-90 transition-transform ${
+                            t.completed ? "bg-green-500 text-white" : "bg-gray-100 text-gray-400"
+                          }`}
+                        >
+                          <FiCheck size={14} />
+                        </button>
+                        <button
+                          onClick={() => deleteTopic(t._id)}
+                          className="p-1.5 rounded-full bg-gray-100 text-gray-400 hover:text-red-500 active:scale-90 transition-transform"
+                        >
+                          <FiTrash2 size={14} />
+                        </button>
+                      </div>
                     </div>
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() => toggleComplete(t)}
-                        className={`p-1.5 rounded-full active:scale-90 transition-transform ${
-                          t.completed ? "bg-green-500 text-white" : "bg-gray-100 text-gray-400"
-                        }`}
-                      >
-                        <FiCheck size={14} />
-                      </button>
-                      <button
-                        onClick={() => deleteTopic(t._id)}
-                        className="p-1.5 rounded-full bg-gray-100 text-gray-400 hover:text-red-500 active:scale-90 transition-transform"
-                      >
-                        <FiTrash2 size={14} />
-                      </button>
-                    </div>
+                    {t.problemsTarget > 0 && (
+                      <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden mt-2">
+                        <div
+                          className="h-full bg-secondary rounded-full transition-all duration-500"
+                          style={{
+                            width: `${Math.min(100, (t.problemsSolved / t.problemsTarget) * 100)}%`,
+                          }}
+                        />
+                      </div>
+                    )}
                   </motion.div>
                 ))}
               </AnimatePresence>
