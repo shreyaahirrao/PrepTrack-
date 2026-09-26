@@ -30,7 +30,6 @@ exports.deleteTopic = async (req, res) => {
   res.json({ message: "Deleted" });
 };
 
-// Core "days remaining vs topics left" logic — flexible duration aware
 exports.getProgressSummary = async (req, res) => {
   const user = await User.findById(req.user._id);
   const topics = await RoadmapTopic.find({ user: req.user._id });
@@ -65,7 +64,6 @@ exports.getProgressSummary = async (req, res) => {
   });
 };
 
-// Milestones
 exports.createMilestone = async (req, res) => {
   const milestone = await Milestone.create({ ...req.body, user: req.user._id });
   res.status(201).json(milestone);
@@ -74,4 +72,17 @@ exports.createMilestone = async (req, res) => {
 exports.getMilestones = async (req, res) => {
   const milestones = await Milestone.find({ user: req.user._id }).sort({ date: -1 });
   res.json(milestones);
+};
+
+exports.deleteMilestone = async (req, res) => {
+  try {
+    const milestone = await Milestone.findOneAndDelete({
+      _id: req.params.id,
+      user: req.user._id,
+    });
+    if (!milestone) return res.status(404).json({ message: "Not found" });
+    res.json({ message: "Deleted" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };

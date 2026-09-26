@@ -60,6 +60,13 @@ const Roadmap = () => {
     fetchAll();
   };
 
+  const deleteMilestone = async (id) => {
+  if (!confirm("Delete this milestone?")) return;
+  await api.delete(`/roadmap/milestones/${id}`);
+  toast.success("Milestone deleted");
+  fetchAll();
+};
+
   return (
     <PageTransition>
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
@@ -190,14 +197,25 @@ const Roadmap = () => {
             <EmptyState title="No milestones yet" subtitle="Log a mock interview or resume review" />
           ) : (
             <div className="space-y-2">
-              {milestones.map((m) => (
-                <div key={m._id} className="p-3 rounded-xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800">
-                  <p className="font-medium text-sm text-gray-900 dark:text-gray-100 truncate">{m.title}</p>
-                  <p className="text-xs text-gray-400 dark:text-gray-500">
-                    {m.type} · {new Date(m.date).toLocaleDateString()}
-                  </p>
-                </div>
-              ))}
+   {milestones.map((m) => (
+  <div
+    key={m._id}
+    className="p-3 rounded-xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 flex items-center justify-between gap-2"
+  >
+    <div className="min-w-0">
+      <p className="font-medium text-sm text-gray-900 dark:text-gray-100 truncate">{m.title}</p>
+      <p className="text-xs text-gray-400 dark:text-gray-500">
+        {m.type} · {new Date(m.date).toLocaleDateString()}
+      </p>
+    </div>
+    <button
+      onClick={() => deleteMilestone(m._id)}
+      className="p-1.5 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-400 dark:text-gray-300 hover:text-red-500 active:scale-90 transition-transform shrink-0"
+    >
+      <FiTrash2 size={14} />
+    </button>
+  </div>
+))}
             </div>
           )}
         </div>
