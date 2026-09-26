@@ -161,56 +161,58 @@ const Applications = () => {
 
   return (
     <PageTransition>
-      <div className="max-w-5xl mx-auto px-6 py-10">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Applications</h1>
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-6">
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100">Applications</h1>
           <div className="flex gap-3">
             <button
               onClick={exportCSV}
               disabled={apps.length === 0}
-              className="flex items-center gap-2 bg-white dark:bg-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-700 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 active:scale-95 transition-all disabled:opacity-40"
+              className="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-white dark:bg-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-700 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 active:scale-95 transition-all disabled:opacity-40 text-sm sm:text-base"
             >
               <FiDownload /> Export CSV
             </button>
             <button
               onClick={openNew}
-              className="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg hover:opacity-90 active:scale-95 transition-all"
+              className="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-primary text-white px-4 py-2 rounded-lg hover:opacity-90 active:scale-95 transition-all text-sm sm:text-base"
             >
               <FiPlus /> Add Application
             </button>
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-3 mb-6">
+        <div className="flex flex-col sm:flex-row flex-wrap gap-3 mb-6">
           <input
             placeholder="Search company or role..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="flex-1 min-w-[200px] border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+            className="flex-1 min-w-0 sm:min-w-[200px] border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
           />
-          <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className="border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 rounded-lg px-3 py-2 text-sm"
-          >
-            <option value="">All Statuses</option>
-            <option>Applied</option>
-            <option>OA</option>
-            <option>Interview</option>
-            <option>Offer</option>
-            <option>Rejected</option>
-          </select>
-          <select
-            value={typeFilter}
-            onChange={(e) => setTypeFilter(e.target.value)}
-            className="border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 rounded-lg px-3 py-2 text-sm"
-          >
-            <option value="">All Types</option>
-            <option>Core Engineering</option>
-            <option>Software/IT</option>
-            <option>Data Science</option>
-            <option>Other</option>
-          </select>
+          <div className="flex gap-3">
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="flex-1 sm:flex-none border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 rounded-lg px-3 py-2 text-sm"
+            >
+              <option value="">All Statuses</option>
+              <option>Applied</option>
+              <option>OA</option>
+              <option>Interview</option>
+              <option>Offer</option>
+              <option>Rejected</option>
+            </select>
+            <select
+              value={typeFilter}
+              onChange={(e) => setTypeFilter(e.target.value)}
+              className="flex-1 sm:flex-none border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 rounded-lg px-3 py-2 text-sm"
+            >
+              <option value="">All Types</option>
+              <option>Core Engineering</option>
+              <option>Software/IT</option>
+              <option>Data Science</option>
+              <option>Other</option>
+            </select>
+          </div>
         </div>
 
         {apps.length === 0 ? (
@@ -236,21 +238,21 @@ const Applications = () => {
                   }`}
                 >
                   <div
-                    className="p-4 flex items-center justify-between cursor-pointer"
+                    className="p-3 sm:p-4 flex items-center justify-between cursor-pointer gap-2"
                     onClick={() => setExpandedId(expandedId === app._id ? null : app._id)}
                   >
                     <div className="flex items-center gap-4 flex-1 min-w-0">
                       <div className="min-w-0">
-                        <p className="font-medium text-gray-900 dark:text-gray-100 truncate">
+                        <p className="font-medium text-gray-900 dark:text-gray-100 truncate text-sm sm:text-base">
                           {app.company} <span className="text-gray-400 dark:text-gray-500 font-normal">— {app.roleTitle}</span>
                         </p>
-                        <div className="flex items-center gap-3 mt-1">
+                        <div className="flex flex-wrap items-center gap-2 sm:gap-3 mt-1">
                           <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${STATUS_COLORS[app.status]}`}>
                             {app.status}
                           </span>
                           <PriorityStars value={app.priority} readOnly />
                           {app.referral?.name && (
-                            <span className="flex items-center gap-1 text-xs text-gray-400 dark:text-gray-500">
+                            <span className="hidden sm:flex items-center gap-1 text-xs text-gray-400 dark:text-gray-500">
                               <FiUser size={12} /> {app.referral.name}
                             </span>
                           )}
@@ -260,7 +262,7 @@ const Applications = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3 shrink-0">
+                    <div className="flex items-center gap-2 sm:gap-3 shrink-0">
                       <button
                         onClick={(e) => { e.stopPropagation(); openEdit(app); }}
                         className="text-gray-400 hover:text-primary"
@@ -283,7 +285,7 @@ const Applications = () => {
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        className="border-t border-gray-100 dark:border-gray-700 px-4 py-4 grid md:grid-cols-2 gap-6"
+                        className="border-t border-gray-100 dark:border-gray-700 px-3 sm:px-4 py-4 grid grid-cols-1 md:grid-cols-2 gap-6"
                       >
                         <div>
                           <h4 className="text-sm font-semibold mb-3 flex items-center gap-2 text-gray-700 dark:text-gray-300">
@@ -309,16 +311,14 @@ const Applications = () => {
                             <div className="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700">
                               <h4 className="text-sm font-semibold mb-2 text-gray-700 dark:text-gray-300">Referral</h4>
                               <p className="text-sm text-gray-600 dark:text-gray-300">{app.referral.name}</p>
-                              
-                             {app.referral.linkedin && (
-  <span
-    onClick={() => window.open(app.referral.linkedin, "_blank")}
-    className="text-xs text-primary hover:underline cursor-pointer"
-  >
-    View LinkedIn
-  </span>
-)}
-                              
+                              {app.referral.linkedin && (
+                                <span
+                                  onClick={() => window.open(app.referral.linkedin, "_blank")}
+                                  className="text-xs text-primary hover:underline cursor-pointer"
+                                >
+                                  View LinkedIn
+                                </span>
+                              )}
                               <label className="flex items-center gap-2 mt-2 text-xs text-gray-500 dark:text-gray-400">
                                 <input
                                   type="checkbox"
@@ -345,7 +345,7 @@ const Applications = () => {
                               <p className="text-xs text-gray-400 dark:text-gray-500">No questions logged yet</p>
                             )}
                           </div>
-                          <div className="flex gap-2">
+                          <div className="flex flex-col sm:flex-row gap-2">
                             <input
                               placeholder="Add a question you were asked..."
                               value={newQuestion}
@@ -390,7 +390,7 @@ const Applications = () => {
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.9, opacity: 0 }}
                 onClick={(e) => e.stopPropagation()}
-                className="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-md relative max-h-[90vh] overflow-y-auto"
+                className="bg-white dark:bg-gray-800 rounded-2xl p-5 sm:p-6 w-full max-w-md relative max-h-[90vh] overflow-y-auto"
               >
                 <button
                   onClick={() => setShowModal(false)}

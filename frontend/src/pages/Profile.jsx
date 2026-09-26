@@ -54,21 +54,21 @@ const Profile = () => {
 
   return (
     <PageTransition>
-      <div className="max-w-2xl mx-auto px-6 py-10">
-        <h1 className="text-2xl font-bold mb-6 text-gray-900 dark:text-gray-100">Profile & Settings</h1>
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
+        <h1 className="text-xl sm:text-2xl font-bold mb-6 text-gray-900 dark:text-gray-100">Profile & Settings</h1>
 
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-6 mb-6"
+          className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-4 sm:p-6 mb-6"
         >
           <div className="flex items-center gap-4 mb-6">
-            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white text-2xl font-bold">
+            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white text-xl sm:text-2xl font-bold shrink-0">
               {user?.name?.[0]?.toUpperCase() || <FiUser />}
             </div>
-            <div>
-              <p className="font-bold text-lg text-gray-900 dark:text-gray-100">{user?.name}</p>
-              <p className="text-gray-400 dark:text-gray-500 text-sm">{user?.email}</p>
+            <div className="min-w-0">
+              <p className="font-bold text-base sm:text-lg text-gray-900 dark:text-gray-100 truncate">{user?.name}</p>
+              <p className="text-gray-400 dark:text-gray-500 text-sm truncate">{user?.email}</p>
             </div>
           </div>
 
@@ -116,7 +116,7 @@ const Profile = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-6"
+          className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-4 sm:p-6"
         >
           <div className="flex items-center gap-2 mb-4">
             <FiClock className="text-secondary" size={20} />
@@ -126,23 +126,23 @@ const Profile = () => {
           <div className="grid grid-cols-2 gap-4 mb-5">
             <div>
               <p className="text-xs text-gray-400 dark:text-gray-500">Started on</p>
-              <p className="font-medium text-gray-900 dark:text-gray-100">
+              <p className="font-medium text-sm sm:text-base text-gray-900 dark:text-gray-100">
                 {prepStartDate ? prepStartDate.toLocaleDateString() : "—"}
               </p>
             </div>
             <div>
               <p className="text-xs text-gray-400 dark:text-gray-500">Ends on</p>
-              <p className="font-medium text-gray-900 dark:text-gray-100">
+              <p className="font-medium text-sm sm:text-base text-gray-900 dark:text-gray-100">
                 {prepEndDate ? prepEndDate.toLocaleDateString() : "—"}
               </p>
             </div>
             <div>
               <p className="text-xs text-gray-400 dark:text-gray-500">Days remaining</p>
-              <p className="font-medium text-primary">{daysRemaining ?? "—"} days</p>
+              <p className="font-medium text-sm sm:text-base text-primary">{daysRemaining ?? "—"} days</p>
             </div>
             <div>
               <p className="text-xs text-gray-400 dark:text-gray-500">Duration</p>
-              <p className="font-medium text-gray-900 dark:text-gray-100">{form.prepDurationWeeks} weeks</p>
+              <p className="font-medium text-sm sm:text-base text-gray-900 dark:text-gray-100">{form.prepDurationWeeks} weeks</p>
             </div>
           </div>
 

@@ -7,22 +7,34 @@ import Dashboard from "./pages/Dashboard";
 import Applications from "./pages/Applications";
 import Roadmap from "./pages/Roadmap";
 import Profile from "./pages/Profile";
+import NotFound from "./pages/NotFound";
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useAuth } from "./context/AuthContext";
 import { Toaster } from "react-hot-toast";
-import NotFound from "./pages/NotFound";
+
+const KNOWN_ROUTES = [
+  "/",
+  "/login",
+  "/register",
+  "/dashboard",
+  "/applications",
+  "/roadmap",
+  "/profile",
+];
 
 function App() {
   const { user, loading } = useAuth();
   const location = useLocation();
 
   const isPublicPage = ["/", "/login", "/register"].includes(location.pathname);
+  const isKnownRoute = KNOWN_ROUTES.includes(location.pathname);
+  const showNavbar = user && !isPublicPage && isKnownRoute;
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950 transition-colors duration-300">
       <Toaster position="top-right" />
-      {user && !isPublicPage && <Navbar />}
+      {showNavbar && <Navbar />}
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route

@@ -62,10 +62,10 @@ const Roadmap = () => {
 
   return (
     <PageTransition>
-      <div className="max-w-5xl mx-auto px-6 py-10 grid md:grid-cols-2 gap-8">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
         {/* Topics */}
         <div>
-          <h2 className="text-xl font-bold mb-4 text-gray-900 dark:text-gray-100">Prep Topics</h2>
+          <h2 className="text-lg sm:text-xl font-bold mb-4 text-gray-900 dark:text-gray-100">Prep Topics</h2>
           <form onSubmit={addTopic} className="flex flex-col gap-2 mb-4 bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-100 dark:border-gray-700">
             <input
               placeholder="Topic title (e.g. Dynamic Programming)"
@@ -108,17 +108,17 @@ const Roadmap = () => {
                         : "bg-white dark:bg-gray-800 border-gray-100 dark:border-gray-700"
                     }`}
                   >
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className={`font-medium ${t.completed ? "line-through text-gray-400 dark:text-gray-500" : "text-gray-900 dark:text-gray-100"}`}>
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="min-w-0">
+                        <p className={`font-medium truncate ${t.completed ? "line-through text-gray-400 dark:text-gray-500" : "text-gray-900 dark:text-gray-100"}`}>
                           {t.title}
                         </p>
-                        <p className="text-xs text-gray-400 dark:text-gray-500">
+                        <p className="text-xs text-gray-400 dark:text-gray-500 truncate">
                           {t.category}
                           {t.problemsTarget > 0 && ` · ${t.problemsSolved}/${t.problemsTarget} problems`}
                         </p>
                       </div>
-                      <div className="flex gap-2">
+                      <div className="flex gap-2 shrink-0">
                         {t.problemsTarget > 0 && (
                           <button
                             onClick={() => incrementSolved(t)}
@@ -163,7 +163,7 @@ const Roadmap = () => {
 
         {/* Milestones */}
         <div>
-          <h2 className="text-xl font-bold mb-4 text-gray-900 dark:text-gray-100">Milestones</h2>
+          <h2 className="text-lg sm:text-xl font-bold mb-4 text-gray-900 dark:text-gray-100">Milestones</h2>
           <form onSubmit={addMilestone} className="flex flex-col gap-2 mb-4 bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-100 dark:border-gray-700">
             <select
               value={newMilestone.type}
@@ -192,7 +192,7 @@ const Roadmap = () => {
             <div className="space-y-2">
               {milestones.map((m) => (
                 <div key={m._id} className="p-3 rounded-xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800">
-                  <p className="font-medium text-sm text-gray-900 dark:text-gray-100">{m.title}</p>
+                  <p className="font-medium text-sm text-gray-900 dark:text-gray-100 truncate">{m.title}</p>
                   <p className="text-xs text-gray-400 dark:text-gray-500">
                     {m.type} · {new Date(m.date).toLocaleDateString()}
                   </p>
