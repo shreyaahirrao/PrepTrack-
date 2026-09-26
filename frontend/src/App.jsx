@@ -11,6 +11,7 @@ import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useAuth } from "./context/AuthContext";
 import { Toaster } from "react-hot-toast";
+import NotFound from "./pages/NotFound";
 
 function App() {
   const { user, loading } = useAuth();
@@ -70,6 +71,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </AnimatePresence>
     </div>
