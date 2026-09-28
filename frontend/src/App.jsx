@@ -10,8 +10,6 @@ import { Toaster } from "react-hot-toast";
 const Landing = lazy(() => import("./pages/Landing"));
 const Login = lazy(() => import("./pages/Login"));
 const Register = lazy(() => import("./pages/Register"));
-const ForgotPassword = lazy(() => import("./pages/ForgotPassword"));
-const ResetPassword = lazy(() => import("./pages/ResetPassword"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Applications = lazy(() => import("./pages/Applications"));
 const Roadmap = lazy(() => import("./pages/Roadmap"));
@@ -32,9 +30,7 @@ function App() {
   const { user, loading } = useAuth();
   const location = useLocation();
 
-  const isPublicPage =
-    ["/", "/login", "/register", "/forgot-password"].includes(location.pathname) ||
-    location.pathname.startsWith("/reset-password");
+  const isPublicPage = ["/", "/login", "/register"].includes(location.pathname);
   const isKnownRoute = KNOWN_ROUTES.includes(location.pathname);
   const showNavbar = user && !isPublicPage && isKnownRoute;
 
@@ -59,11 +55,6 @@ function App() {
               path="/register"
               element={user ? <Navigate to="/dashboard" replace /> : <Register />}
             />
-            <Route
-              path="/forgot-password"
-              element={user ? <Navigate to="/dashboard" replace /> : <ForgotPassword />}
-            />
-            <Route path="/reset-password/:token" element={<ResetPassword />} />
             <Route
               path="/dashboard"
               element={

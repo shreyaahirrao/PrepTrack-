@@ -9,17 +9,14 @@ const userSchema = new mongoose.Schema(
     branch: {
       type: String,
       required: true,
-      // flexible — not locked to ENTC, any branch can type their own
       default: "General",
     },
     prepStartDate: { type: Date, default: Date.now },
     prepDurationWeeks: {
       type: Number,
       required: true,
-      default: 26, // 6 months ≈ 26 weeks, but fully user-editable
+      default: 26,
     },
-    resetPasswordToken: { type: String },
-    resetPasswordExpires: { type: Date },
   },
   { timestamps: true }
 );
@@ -34,7 +31,6 @@ userSchema.methods.matchPassword = async function (entered) {
   return bcrypt.compare(entered, this.password);
 };
 
-// Virtual: prep end date, derived from start + duration
 userSchema.virtual("prepEndDate").get(function () {
   const end = new Date(this.prepStartDate);
   end.setDate(end.getDate() + this.prepDurationWeeks * 7);
