@@ -88,7 +88,7 @@ const Roadmap = () => {
             />
             <input
               type="number"
-              placeholder="Problems target (optional)"
+              placeholder="Practice target (optional)"
               value={newTopic.problemsTarget}
               onChange={(e) => setNewTopic({ ...newTopic, problemsTarget: Number(e.target.value) })}
               className="border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 rounded-lg px-3 py-2 text-sm"

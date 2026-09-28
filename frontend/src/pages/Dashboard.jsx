@@ -65,11 +65,11 @@ const Dashboard = () => {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
           <StatCard label="Topics Left" value={progress.topicsLeft} color="text-warning" />
           <StatCard
-            label="DSA Problems"
-            value={`${progress.solvedProblems}/${progress.totalProblems}`}
-            color="text-secondary"
-          />
-          <StatCard label="Mock Interviews" value={progress.mockInterviewsCompleted} color="text-success" />
+  label="Practice Problems"
+  value={`${progress.solvedProblems}/${progress.totalProblems}`}
+  color="text-secondary"
+/>
+<StatCard label="Prep Sessions" value={progress.mockInterviewsCompleted} color="text-success" />
         </div>
 
         {overdue.length > 0 && (
