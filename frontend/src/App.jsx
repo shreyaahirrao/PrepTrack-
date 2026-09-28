@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import Landing from "./pages/Landing";
@@ -12,6 +13,9 @@ import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useAuth } from "./context/AuthContext";
 import { Toaster } from "react-hot-toast";
+const ForgotPassword = lazy(() => import("./pages/Forgotpassword"));
+const ResetPassword = lazy(() => import("./pages/ResetPassword"));
+const isPublicPage = ["/", "/login", "/register", "/forgot-password"].includes(location.pathname) || location.pathname.startsWith("/reset-password");
 
 const KNOWN_ROUTES = [
   "/",
@@ -84,6 +88,8 @@ function App() {
             }
           />
           <Route path="*" element={<NotFound />} />
+          <Route path="/forgot-password" element={user ? <Navigate to="/dashboard" replace /> : <ForgotPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
         </Routes>
       </AnimatePresence>
     </div>

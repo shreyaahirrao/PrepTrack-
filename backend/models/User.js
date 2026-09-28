@@ -18,6 +18,8 @@ const userSchema = new mongoose.Schema(
       required: true,
       default: 26, // 6 months ≈ 26 weeks, but fully user-editable
     },
+    resetPasswordToken: { type: String },
+    resetPasswordExpires: { type: Date },
   },
   { timestamps: true }
 );
