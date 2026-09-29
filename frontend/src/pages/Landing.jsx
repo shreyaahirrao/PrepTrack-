@@ -35,11 +35,11 @@ const features = [
     color: "bg-warning/10 text-warning",
   },
   {
-    icon: <FiUsers size={28} />,
-    title: "Any Branch, Any Role",
-    desc: "Built for core engineering, software/IT, and data science tracks alike — not just one branch.",
-    color: "bg-danger/10 text-danger",
-  },
+  icon: <FiUsers size={28} />,
+  title: "Any Branch, Any Role",
+  desc: "Built for every engineering discipline and placement track — not just one branch.",
+  color: "bg-danger/10 text-danger",
+},
 ];
 
 const Landing = () => {

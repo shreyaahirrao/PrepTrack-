@@ -8,6 +8,7 @@ const milestoneSchema = new mongoose.Schema(
       enum: ["Mock Interview", "Resume Review", "Test Series", "Custom"],
       default: "Custom",
     },
+    customLabel: { type: String, default: "" },
     title: { type: String, required: true },
     date: { type: Date, default: Date.now },
     feedback: { type: String },

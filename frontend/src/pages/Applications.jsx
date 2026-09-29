@@ -207,9 +207,8 @@ const Applications = () => {
               className="flex-1 sm:flex-none border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 rounded-lg px-3 py-2 text-sm"
             >
               <option value="">All Types</option>
-              <option>Core Engineering</option>
+              <option>Core/Branch Role</option>
               <option>Software/IT</option>
-              <option>Data Science</option>
               <option>Other</option>
             </select>
           </div>
@@ -421,9 +420,8 @@ const Applications = () => {
                     onChange={(e) => setForm({ ...form, roleType: e.target.value })}
                     className="w-full border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 rounded-lg px-3 py-2"
                   >
-                    <option>Core Engineering</option>
+                    <option>Core/Branch Role</option>
                     <option>Software/IT</option>
-                    <option>Data Science</option>
                     <option>Other</option>
                   </select>
                   <select

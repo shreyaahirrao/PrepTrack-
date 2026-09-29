@@ -10,7 +10,7 @@ const Roadmap = () => {
   const [topics, setTopics] = useState([]);
   const [milestones, setMilestones] = useState([]);
   const [newTopic, setNewTopic] = useState({ title: "", category: "", problemsTarget: 0 });
-  const [newMilestone, setNewMilestone] = useState({ type: "Mock Interview", title: "" });
+  const [newMilestone, setNewMilestone] = useState({ type: "Mock Interview", title: "", customLabel: "" });
 
   const fetchAll = () => {
     api.get("/roadmap/topics").then((res) => setTopics(res.data));
@@ -55,17 +55,17 @@ const Roadmap = () => {
     e.preventDefault();
     if (!newMilestone.title) return;
     await api.post("/roadmap/milestones", newMilestone);
-    setNewMilestone({ type: "Mock Interview", title: "" });
+    setNewMilestone({ type: "Mock Interview", title: "", customLabel: "" });
     toast.success("Milestone logged");
     fetchAll();
   };
 
   const deleteMilestone = async (id) => {
-  if (!confirm("Delete this milestone?")) return;
-  await api.delete(`/roadmap/milestones/${id}`);
-  toast.success("Milestone deleted");
-  fetchAll();
-};
+    if (!confirm("Delete this milestone?")) return;
+    await api.delete(`/roadmap/milestones/${id}`);
+    toast.success("Milestone deleted");
+    fetchAll();
+  };
 
   return (
     <PageTransition>
@@ -182,6 +182,14 @@ const Roadmap = () => {
               <option>Test Series</option>
               <option>Custom</option>
             </select>
+            {newMilestone.type === "Custom" && (
+              <input
+                placeholder="Specify type (e.g. Group Discussion, Aptitude Test)"
+                value={newMilestone.customLabel}
+                onChange={(e) => setNewMilestone({ ...newMilestone, customLabel: e.target.value })}
+                className="border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 rounded-lg px-3 py-2 text-sm"
+              />
+            )}
             <input
               placeholder="Title (e.g. Mock with senior at Infosys)"
               value={newMilestone.title}
@@ -194,28 +202,28 @@ const Roadmap = () => {
           </form>
 
           {milestones.length === 0 ? (
-            <EmptyState title="No milestones yet" subtitle="Log a mock interview or resume review" />
+            <EmptyState title="No milestones yet" subtitle="Log a mock interview, resume review, or practice session" />
           ) : (
             <div className="space-y-2">
-   {milestones.map((m) => (
-  <div
-    key={m._id}
-    className="p-3 rounded-xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 flex items-center justify-between gap-2"
-  >
-    <div className="min-w-0">
-      <p className="font-medium text-sm text-gray-900 dark:text-gray-100 truncate">{m.title}</p>
-      <p className="text-xs text-gray-400 dark:text-gray-500">
-        {m.type} · {new Date(m.date).toLocaleDateString()}
-      </p>
-    </div>
-    <button
-      onClick={() => deleteMilestone(m._id)}
-      className="p-1.5 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-400 dark:text-gray-300 hover:text-red-500 active:scale-90 transition-transform shrink-0"
-    >
-      <FiTrash2 size={14} />
-    </button>
-  </div>
-))}
+              {milestones.map((m) => (
+                <div
+                  key={m._id}
+                  className="p-3 rounded-xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 flex items-center justify-between gap-2"
+                >
+                  <div className="min-w-0">
+                    <p className="font-medium text-sm text-gray-900 dark:text-gray-100 truncate">{m.title}</p>
+                    <p className="text-xs text-gray-400 dark:text-gray-500">
+                      {m.type === "Custom" && m.customLabel ? m.customLabel : m.type} · {new Date(m.date).toLocaleDateString()}
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => deleteMilestone(m._id)}
+                    className="p-1.5 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-400 dark:text-gray-300 hover:text-red-500 active:scale-90 transition-transform shrink-0"
+                  >
+                    <FiTrash2 size={14} />
+                  </button>
+                </div>
+              ))}
             </div>
           )}
         </div>
